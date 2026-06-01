@@ -1,24 +1,4 @@
-// --- LOGICA INTERACTIVA PRINCIPAL ---
-function revealSurprise() {
-    // 1. Iniciar música
-    const audio = document.getElementById('birthday-song');
-    audio.play().catch(error => {
-        console.log("La reproducción automática requería acción del usuario, arreglado con el click.");
-    });
-
-    // 2. Desvanecer interfaz del regalo
-    document.getElementById('gift-ui').classList.add('fade-out');
-
-    // 3. Mostrar la carta con retraso elegante
-    setTimeout(() => {
-        document.getElementById('letter-ui').classList.add('show');
-    }, 600);
-
-    // 4. Lanzar estallido masivo
-    triggerExplosion();
-}
-
-// --- SISTEMA DE ESTALLIDO (CONFETI, CORAZONES, FLORES, GLOBOS) ---
+// --- CONFIGURACIÓN DEL CANVAS ---
 const canvas = document.getElementById('magic-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -32,25 +12,39 @@ resizeCanvas();
 
 const types = ['confeti', 'corazon', 'flor', 'globo'];
 
+// --- PARTÍCULA INDIVIDUAL (FÍSICA COMPLETA) ---
 class Particle {
-    constructor() {
-        this.x = window.innerWidth / 2;
-        this.y = window.innerHeight / 2 + 50;
-        this.type = types[Math.floor(Math.random() * types.length)];
+    constructor(isFloating = false) {
+        this.isFloating = isFloating; // Define si es parte de la lluvia suave de fondo u explosión
         
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 12 + 6;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed - 5;
-        
-        this.radius = Math.random() * 8 + 6;
-        this.color = `hsl(${Math.random() * 40 + 330}, 100%, ${Math.random() * 20 + 60}%)`;
+        if (this.isFloating) {
+            // Lluvia constante desde arriba
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height - canvas.height;
+            this.type = Math.random() > 0.5 ? 'corazon' : 'flor';
+            this.vx = Math.random() * 1 - 0.5;
+            this.vy = Math.random() * 1.5 + 1; // Caída suave hacia abajo
+            this.opacity = Math.random() * 0.5 + 0.3; // Sutiles de fondo
+            this.radius = Math.random() * 6 + 5;
+        } else {
+            // Gran explosión central
+            this.x = window.innerWidth / 2;
+            this.y = window.innerHeight / 2 + 50;
+            this.type = types[Math.floor(Math.random() * types.length)];
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 14 + 6;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed - 6;
+            this.opacity = 1;
+            this.radius = Math.random() * 8 + 6;
+        }
+
+        this.color = `hsl(${Math.random() * 30 + 330}, 100%, 65%)`; // Base rosados/fucsias
         if(this.type === 'confeti') this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
         
-        this.opacity = 1;
-        this.gravity = 0.2;
+        this.gravity = this.isFloating ? 0 : 0.22;
         this.rotation = Math.random() * Math.PI;
-        this.rotationSpeed = Math.random() * 0.1 - 0.05;
+        this.rotationSpeed = Math.random() * 0.08 - 0.04;
     }
 
     draw() {
@@ -64,7 +58,7 @@ class Particle {
             ctx.fillRect(-this.radius, -this.radius/2, this.radius * 2, this.radius);
         } 
         else if (this.type === 'corazon') {
-            ctx.fillStyle = '#ff3366';
+            ctx.fillStyle = '#ff2a6d';
             ctx.beginPath();
             ctx.moveTo(0, -this.radius/2);
             ctx.bezierCurveTo(-this.radius, -this.radius, -this.radius, this.radius/2, 0, this.radius);
@@ -72,16 +66,16 @@ class Particle {
             ctx.fill();
         } 
         else if (this.type === 'flor') {
-            ctx.fillStyle = '#ffccd5';
+            ctx.fillStyle = '#ffb3c6';
             for (let i = 0; i < 5; i++) {
                 ctx.rotate(Math.PI / 2.5);
                 ctx.beginPath();
-                ctx.ellipse(0, -this.radius, this.radius/2, this.radius, 0, 0, Math.PI * 2);
+                ctx.ellipse(0, -this.radius, this.radius/1.8, this.radius, 0, 0, Math.PI * 2);
                 ctx.fill();
             }
             ctx.beginPath();
-            ctx.fillStyle = '#ffeb3b';
-            ctx.arc(0, 0, this.radius/3, 0, Math.PI*2);
+            ctx.fillStyle = '#ffe066';
+            ctx.arc(0, 0, this.radius/2.5, 0, Math.PI*2);
             ctx.fill();
         } 
         else if (this.type === 'globo') {
@@ -89,12 +83,10 @@ class Particle {
             ctx.beginPath();
             ctx.ellipse(0, 0, this.radius, this.radius * 1.3, 0, 0, Math.PI * 2);
             ctx.fill();
-            
             ctx.beginPath();
             ctx.moveTo(0, this.radius * 1.3);
             ctx.lineTo(0, this.radius * 2.5);
-            ctx.strokeStyle = '#999';
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#bbb';
             ctx.stroke();
         }
 
@@ -106,29 +98,62 @@ class Particle {
         this.y += this.vy;
         this.vy += this.gravity;
         this.rotation += this.rotationSpeed;
-        this.opacity -= 0.006;
+
+        if (!this.isFloating) {
+            this.opacity -= 0.005; // Desvanecimiento gradual de la explosión
+        } else {
+            // Si la partícula flotante sale de la pantalla, regresa arriba
+            if (this.y > canvas.height) {
+                this.y = -20;
+                this.x = Math.random() * canvas.width;
+            }
+        }
     }
 }
 
-function triggerExplosion() {
+// --- LLUVIA FLOTANTE DE FONDO PERMANENTE ---
+function initBackgroundFlow() {
+    for (let i = 0; i < 40; i++) {
+        const p = new Particle(true);
+        p.y = Math.random() * canvas.height; // Distribuir por toda la pantalla al inicio
+        particles.push(p);
+    }
+    animate();
+}
+
+// --- LOGICA DE REVELACIÓN AL HACER CLICK ---
+function revealSurprise() {
+    const audio = document.getElementById('birthday-song');
+    audio.play().catch(err => console.log("Audio activado vía interacción."));
+
+    document.getElementById('gift-ui').classList.add('fade-out');
+
+    setTimeout(() => {
+        document.getElementById('letter-ui').classList.add('show');
+    }, 600);
+
+    // Añadir partículas masivas de explosión al arreglo existente
     for (let i = 0; i < 220; i++) {
-        particles.push(new Particle());
+        particles.push(new Particle(false));
     }
-    animateParticles();
 }
 
-function animateParticles() {
+// --- BUCLE DE ANIMACIÓN ÚNICO INTEGRADO ---
+function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     particles.forEach((p, index) => {
         p.update();
         p.draw();
-        if (p.opacity <= 0 || p.y > canvas.height) {
+        
+        // Remover solo las partículas de la explosión que ya se desvanecieron por completo
+        if (!p.isFloating && p.opacity <= 0) {
             particles.splice(index, 1);
         }
     });
 
-    if (particles.length > 0) {
-        requestAnimationFrame(animateParticles);
-    }
+    requestAnimationFrame(animate);
 }
+
+// Iniciar flujo de corazones y flores flotantes desde el segundo cero
+initBackgroundFlow();
