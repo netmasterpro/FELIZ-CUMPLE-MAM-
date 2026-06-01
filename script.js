@@ -1,4 +1,3 @@
-// --- CONFIGURACIÓN DEL CANVAS ---
 const canvas = document.getElementById('magic-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -12,22 +11,19 @@ resizeCanvas();
 
 const types = ['confeti', 'corazon', 'flor', 'globo'];
 
-// --- PARTÍCULA INDIVIDUAL (LLUVIA CONSTANTE Y EXPLOSIÓN) ---
 class Particle {
     constructor(isFloating = false) {
         this.isFloating = isFloating; 
         
         if (this.isFloating) {
-            // Lluvia persistente de fondo
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height - canvas.height;
             this.type = Math.random() > 0.5 ? 'corazon' : 'flor';
             this.vx = Math.random() * 0.8 - 0.4;
-            this.vy = Math.random() * 1.2 + 0.8; // Caída sutil y lenta
+            this.vy = Math.random() * 1.2 + 0.8; 
             this.opacity = Math.random() * 0.4 + 0.25; 
             this.radius = Math.random() * 5 + 4;
         } else {
-            // Gran explosión al abrir regalo
             this.x = window.innerWidth / 2;
             this.y = window.innerHeight / 2;
             this.type = types[Math.floor(Math.random() * types.length)];
@@ -110,7 +106,6 @@ class Particle {
     }
 }
 
-// --- LLUVIA CONSTANTE DESDE EL INICIO ---
 function initBackgroundFlow() {
     for (let i = 0; i < 35; i++) {
         const p = new Particle(true);
@@ -120,10 +115,9 @@ function initBackgroundFlow() {
     animate();
 }
 
-// --- ACCIÓN DE REVELAR ---
 function revealSurprise() {
     const audio = document.getElementById('birthday-song');
-    audio.play().catch(err => console.log("Audio activado por click elemental."));
+    audio.play().catch(err => console.log("Audio activo"));
 
     document.getElementById('gift-ui').classList.add('fade-out');
 
@@ -131,7 +125,6 @@ function revealSurprise() {
         document.getElementById('letter-ui').classList.add('show');
     }, 600);
 
-    // Explosión al abrir el regalo
     for (let i = 0; i < 180; i++) {
         particles.push(new Particle(false));
     }
@@ -152,5 +145,4 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// Inicialización automática
 initBackgroundFlow();
