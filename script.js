@@ -12,34 +12,34 @@ resizeCanvas();
 
 const types = ['confeti', 'corazon', 'flor', 'globo'];
 
-// --- PARTÍCULA INDIVIDUAL (FÍSICA COMPLETA) ---
+// --- PARTÍCULA INDIVIDUAL (LLUVIA CONSTANTE Y EXPLOSIÓN) ---
 class Particle {
     constructor(isFloating = false) {
-        this.isFloating = isFloating; // Define si es parte de la lluvia suave de fondo u explosión
+        this.isFloating = isFloating; 
         
         if (this.isFloating) {
-            // Lluvia constante desde arriba
+            // Lluvia persistente de fondo
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height - canvas.height;
             this.type = Math.random() > 0.5 ? 'corazon' : 'flor';
-            this.vx = Math.random() * 1 - 0.5;
-            this.vy = Math.random() * 1.5 + 1; // Caída suave hacia abajo
-            this.opacity = Math.random() * 0.5 + 0.3; // Sutiles de fondo
-            this.radius = Math.random() * 6 + 5;
+            this.vx = Math.random() * 0.8 - 0.4;
+            this.vy = Math.random() * 1.2 + 0.8; // Caída sutil y lenta
+            this.opacity = Math.random() * 0.4 + 0.25; 
+            this.radius = Math.random() * 5 + 4;
         } else {
-            // Gran explosión central
+            // Gran explosión al abrir regalo
             this.x = window.innerWidth / 2;
-            this.y = window.innerHeight / 2 + 50;
+            this.y = window.innerHeight / 2;
             this.type = types[Math.floor(Math.random() * types.length)];
             const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 14 + 6;
+            const speed = Math.random() * 11 + 5;
             this.vx = Math.cos(angle) * speed;
-            this.vy = Math.sin(angle) * speed - 6;
+            this.vy = Math.sin(angle) * speed - 5;
             this.opacity = 1;
-            this.radius = Math.random() * 8 + 6;
+            this.radius = Math.random() * 7 + 5;
         }
 
-        this.color = `hsl(${Math.random() * 30 + 330}, 100%, 65%)`; // Base rosados/fucsias
+        this.color = `hsl(${Math.random() * 30 + 330}, 100%, 65%)`; 
         if(this.type === 'confeti') this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
         
         this.gravity = this.isFloating ? 0 : 0.22;
@@ -100,9 +100,8 @@ class Particle {
         this.rotation += this.rotationSpeed;
 
         if (!this.isFloating) {
-            this.opacity -= 0.005; // Desvanecimiento gradual de la explosión
+            this.opacity -= 0.006; 
         } else {
-            // Si la partícula flotante sale de la pantalla, regresa arriba
             if (this.y > canvas.height) {
                 this.y = -20;
                 this.x = Math.random() * canvas.width;
@@ -111,20 +110,20 @@ class Particle {
     }
 }
 
-// --- LLUVIA FLOTANTE DE FONDO PERMANENTE ---
+// --- LLUVIA CONSTANTE DESDE EL INICIO ---
 function initBackgroundFlow() {
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 35; i++) {
         const p = new Particle(true);
-        p.y = Math.random() * canvas.height; // Distribuir por toda la pantalla al inicio
+        p.y = Math.random() * canvas.height; 
         particles.push(p);
     }
     animate();
 }
 
-// --- LOGICA DE REVELACIÓN AL HACER CLICK ---
+// --- ACCIÓN DE REVELAR ---
 function revealSurprise() {
     const audio = document.getElementById('birthday-song');
-    audio.play().catch(err => console.log("Audio activado vía interacción."));
+    audio.play().catch(err => console.log("Audio activado por click elemental."));
 
     document.getElementById('gift-ui').classList.add('fade-out');
 
@@ -132,13 +131,12 @@ function revealSurprise() {
         document.getElementById('letter-ui').classList.add('show');
     }, 600);
 
-    // Añadir partículas masivas de explosión al arreglo existente
-    for (let i = 0; i < 220; i++) {
+    // Explosión al abrir el regalo
+    for (let i = 0; i < 180; i++) {
         particles.push(new Particle(false));
     }
 }
 
-// --- BUCLE DE ANIMACIÓN ÚNICO INTEGRADO ---
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -146,7 +144,6 @@ function animate() {
         p.update();
         p.draw();
         
-        // Remover solo las partículas de la explosión que ya se desvanecieron por completo
         if (!p.isFloating && p.opacity <= 0) {
             particles.splice(index, 1);
         }
@@ -155,5 +152,5 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// Iniciar flujo de corazones y flores flotantes desde el segundo cero
+// Inicialización automática
 initBackgroundFlow();
