@@ -1,41 +1,172 @@
-body{
-  font-family:Arial;
-  background:#f2f2f2;
-  margin:0;
-  padding:20px;
+/* --- ESTILOS GENERALES Y CONFIGURACIÓN --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-h1{
-  text-align:center;
-  margin-bottom:30px;
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffeef2;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1000px;
 }
 
-.contenedor{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:20px;
+/* --- EFECTO DE TEXTO DORADO PREMIUM --- */
+.gold-text {
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(to bottom, #cf9f3b 0%, #f9e49f 25%, #e7c067 50%, #b38938 75%, #ecdb99 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
+    font-size: 3.5rem;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 10px;
 }
 
-.animal{
-  background:white;
-  border-radius:10px;
-  padding:10px;
-  text-align:center;
-  cursor:pointer;
-  transition:0.3s;
-  box-shadow:0 3px 10px rgba(0,0,0,0.2);
+.sub-gold {
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(to bottom, #cf9f3b 0%, #f9e49f 50%, #b38938 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
-.animal:hover{
-  transform:scale(1.05);
+/* --- CONTENEDOR DE LA PANTALLA DE INICIO --- */
+.gift-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.animal img{
-  width:100px;
-  height:100px;
-  object-fit:contain;
+.gift-interface.fade-out {
+    opacity: 0;
+    transform: scale(0.8) translateY(-50px);
+    pointer-events: none;
+    position: absolute;
 }
 
-.animal p{
-  font-weight:bold;
+/* --- ANIMACIÓN DEL REGALO SALTARÍN --- */
+.gift-box {
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+    margin: 30px 0;
+    animation: bounceJump 1.2s infinite ease-in-out;
+    transition: transform 0.2s;
+}
+
+.gift-box:hover {
+    animation-play-state: paused;
+    transform: scale(1.1);
+}
+
+.gift-box svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 15px rgba(214, 51, 132, 0.3));
+}
+
+/* --- TEXTO DEBAJO DEL REGALO --- */
+.instructions {
+    color: #d63384;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    text-align: center;
+}
+
+/* --- CARTA SORPRESA (OCULTA AL PRINCIPIO) --- */
+.letter-container {
+    position: fixed;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('fondo.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    padding: 35px 25px;
+    overflow-y: auto;
+    border: 3px solid #e7c067;
+    opacity: 0;
+    transform: scale(0.5) rotateX(45deg);
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.letter-container.show {
+    opacity: 1;
+    transform: scale(1) rotateX(0deg);
+    pointer-events: auto;
+}
+
+/* --- DECORACIÓN INTERIOR DE LA CARTA --- */
+.gif-decoration {
+    width: 100px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.letter-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333;
+    text-align: center;
+    font-weight: 400;
+    white-space: pre-line;
+}
+
+/* --- CANVAS PARA EL ESTALLIDO DE ELEMENTOS --- */
+#magic-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* --- ANIMACIONES DE HOVER Y SALTOS --- */
+@keyframes bounceJump {
+    0%, 100% {
+        transform: translateY(0) scaleY(1);
+    }
+    40% {
+        transform: translateY(-30px) scaleY(1.05);
+    }
+    50% {
+        transform: translateY(-35px) scaleY(1);
+    }
+    60% {
+        transform: translateY(-30px) scaleY(0.95);
+    }
+    85% {
+        transform: translateY(0) scaleY(0.92);
+    }
+}
+
+/* Personalización barra de scroll de la carta */
+.letter-container::-webkit-scrollbar {
+    width: 8px;
+}
+.letter-container::-webkit-scrollbar-thumb {
+    background: #e7c067;
+    border-radius: 10px;
 }
