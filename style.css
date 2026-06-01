@@ -18,46 +18,44 @@ body {
     padding: 10px;
 }
 
-/* --- TEXTO ORO CON CONTORNO DE ALTO CONTRASTE --- */
+/* --- TEXTO ORO ULTRA GORDITO Y LLAMATIVO --- */
 .gold-text {
-    font-family: 'Playfair Display', serif;
-    font-weight: 900;
-    font-style: italic;
+    font-family: 'Lilita One', cursive; /* Fuente súper rellena, gordita y amigable */
+    text-transform: uppercase;
     background: linear-gradient(
         to bottom, 
         #ffe600 0%,  
         #fffbcf 20%, 
         #ffcc00 45%, 
-        #d4a373 70%, 
-        #ffcc00 100%
+        #d4a373 75%, 
+        #ffcc00 100
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
-    /* Contorno sutil oscuro para despegar del fondo */
-    -webkit-text-stroke: 1px #4a3200; 
+    /* Contorno oscuro más grueso para letras gorditas */
+    -webkit-text-stroke: 1.5px #382400; 
     
-    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.5)) drop-shadow(0px 1px 1px rgba(255, 230, 0, 0.4));
-    font-size: 2.3rem; 
+    filter: drop-shadow(0px 5px 8px rgba(0, 0, 0, 0.45)) drop-shadow(0px 1px 2px rgba(255, 230, 0, 0.6));
+    font-size: 2.5rem; 
     text-align: center;
-    line-height: 1.2;
+    line-height: 1.15;
     margin-bottom: 5px;
-    letter-spacing: -0.5px;
+    letter-spacing: 0.5px;
 }
 
 .sub-gold {
     font-family: 'Playfair Display', serif;
-    font-weight: 900;
+    font-weight: 900; /* Peso máximo, muy gruesa */
     font-style: italic;
-    background: linear-gradient(to bottom, #fffbcf 0%, #ffcc00 60%, #b38600 100%);
+    background: linear-gradient(to bottom, #fffbcf 0%, #ffcc00 50%, #b38600 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
-    /* Contorno sutil oscuro para la carta antigua */
-    -webkit-text-stroke: 0.8px #3a2200;
+    -webkit-text-stroke: 1px #2b1a00;
 
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4));
-    font-size: 1.7rem;
+    filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.4));
+    font-size: 1.8rem;
     text-align: center;
     margin-bottom: 15px;
 }
@@ -223,7 +221,7 @@ body {
     transform-origin: center bottom;
 }
 
-/* --- EXPOSITORES DE CAPAS --- */
+/* --- ANIMACIÓN POR CAPAS --- */
 .show .cake-bottom { animation: dropIn 0.5s forwards 0.8s ease-out; }
 .show .cake-top { animation: dropIn 0.5s forwards 1.2s ease-out; }
 .show .cream { animation: dropIn 0.4s forwards 1.6s ease-out; }
@@ -240,11 +238,12 @@ body {
     100% { transform: scale(1.1) rotate(1deg); filter: brightness(1.2); }
 }
 
-/* Redimensionado del GIF al final */
+/* Estilos para tu GIF local al final */
 .gif-decoration {
-    width: 75px;
+    width: 90px;
     height: auto;
     margin-top: 20px;
+    filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.15));
 }
 
 /* --- CANVAS PARA EFECTOS --- */
@@ -269,7 +268,7 @@ body {
 .letter-container::-webkit-scrollbar-thumb { background: #7a5835; border-radius: 10px; }
 
 @media (max-width: 360px) {
-    .gold-text { font-size: 1.9rem; }
+    .gold-text { font-size: 2.1rem; }
     .vintage-paper { padding: 20px 15px; }
     .letter-text { font-size: 1.05rem; }
 }
