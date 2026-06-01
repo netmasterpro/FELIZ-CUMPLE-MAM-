@@ -1,161 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animales para Niños</title>
-
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños Madrecita Bella! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🐾 SONIDOS DE ANIMALES 🐾</h1>
+    <canvas id="magic-canvas"></canvas>
 
-  <div class="contenedor">
+    <audio id="birthday-song" src="musica.mp3" loop></audio>
 
-    <div class="animal" onclick="sonido('abeja')">
-      <img src="imagenes/abeja.png">
-      <p>ABEJA</p>
+    <div class="gift-interface" id="gift-ui">
+        <h1 class="gold-text">Feliz Cumpleaños<br>Madrecita Bella ❤️</h1>
+        
+        <div class="gift-box" onclick="revealSurprise()">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 10h16v11H4V10z" fill="#ff4d79"/>
+                <path d="M3 7h18v3H3V7z" fill="#ff3366"/>
+                <path d="M11 7h2v14h-2V7z" fill="#ffeb3b"/>
+                <path d="M3 12h18v2H3v-2z" fill="#ffeb3b"/>
+                <path d="M12 7C9 3 6 4 7 7h5z" fill="#ffd54f"/>
+                <path d="M12 7c3-4 6-3 5 0h-5z" fill="#ffd54f"/>
+            </svg>
+        </div>
+
+        <p class="instructions">Abre el regalito mami ❤️</p>
     </div>
 
-    <div class="animal" onclick="sonido('aguila')">
-      <img src="imagenes/aguila.png">
-      <p>AGUILA</p>
+    <div class="letter-container" id="letter-ui">
+        <h2 class="sub-gold" style="margin-bottom: 15px;">Para la Reina de mi Corazón</h2>
+        
+        <img class="gif-decoration" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9pZ3E5ZXFndXFicXF6Z3RxZ3N6b3N6b3N6b3N6b3N6b3MmdGltdD0xNzE1MTgzNTU0/K30XMo6S1Sg0/giphy.gif" alt="Corazones bailando">
+        
+        <p class="letter-text">Hola Madrecita Bella♥️🥰 
+
+Un Día Como Hoy Hace 43 Años Nació La Mujer Más Hermosa de Este Planeta❤️ Le Doy Gracias a Dios Por Otro Año Más De Vida Que Te Ha Regalado🥺♥️ Eres La Mejor Mamita🥹♥️ Gracias Por Siempre estar Para Mí y por apoyarme en Todo🥰 Estoy agradecida con Dios Por Haberte Puesto a Ti Como Mi Madre❤️ Mi Compañera♥️ Y Mi Mejor Amiga🤭❤️ Sos La Mejor❤️‍🩹 A Pesar de Todo Nunca Te Rindes Y me Enseñas siempre a Seguir Adelante....🥰 
+
+Que Diosito Te Bendiga Hoy, Mañana Y Siempre Madre Que te guarde dónde quiera que vayas♥️ Y que Te siga dando Muchisisisisisisisisisisisisisimos Años Más Al Lado De Nosotros❤️ 
+
+Te Amamos Madrecita🥰♥️</p>
     </div>
 
-    <div class="animal" onclick="sonido('ballena')">
-      <img src="imagenes/ballena.png">
-      <p>BALLENA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('burro')">
-      <img src="imagenes/burro.png">
-      <p>BURRO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('caballo')">
-      <img src="imagenes/caballo.png">
-      <p>CABALLO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('cabra')">
-      <img src="imagenes/cabra.png">
-      <p>CABRA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('cerdo')">
-      <img src="imagenes/cerdo.png">
-      <p>CERDO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('cocodrilo')">
-      <img src="imagenes/COCODRILLO.png">
-      <p>COCODRILO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('conejo')">
-      <img src="imagenes/conejo.png">
-      <p>CONEJO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('delfin')">
-      <img src="imagenes/delfin.png">
-      <p>DELFIN</p>
-    </div>
-
-    <div class="animal" onclick="sonido('dinosaurio')">
-      <img src="imagenes/dinosaurio.png">
-      <p>DINOSAURIO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('elefante')">
-      <img src="imagenes/elefante.png">
-      <p>ELEFANTE</p>
-    </div>
-
-    <div class="animal" onclick="sonido('gallina')">
-      <img src="imagenes/gallina.png">
-      <p>GALLINA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('gallo')">
-      <img src="imagenes/gallo.png">
-      <p>GALLO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('gato')">
-      <img src="imagenes/gato.png">
-      <p>GATO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('hipopotamo')">
-      <img src="imagenes/hipopotamo.png">
-      <p>HIPOPOTAMO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('jirafa')">
-      <img src="imagenes/jirafa.png">
-      <p>JIRAFA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('leon')">
-      <img src="imagenes/leon.png">
-      <p>LEON</p>
-    </div>
-
-    <div class="animal" onclick="sonido('mono')">
-      <img src="imagenes/mono.png">
-      <p>MONO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('oso')">
-      <img src="imagenes/oso.png">
-      <p>OSO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('oveja')">
-      <img src="imagenes/oveja.png">
-      <p>OVEJA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('panda')">
-      <img src="imagenes/panda.png">
-      <p>PANDA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('pato')">
-      <img src="imagenes/pato.png">
-      <p>PATO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('perro')">
-      <img src="imagenes/perro.png">
-      <p>PERRO</p>
-    </div>
-
-    <div class="animal" onclick="sonido('rana')">
-      <img src="imagenes/rana.png">
-      <p>RANA</p>
-    </div>
-
-    <div class="animal" onclick="sonido('serpiente')">
-      <img src="imagenes/serpiente.png">
-      <p>SERPIENTE</p>
-    </div>
-
-    <div class="animal" onclick="sonido('tigre')">
-      <img src="imagenes/tigre.png">
-      <p>TIGRE</p>
-    </div>
-
-    <div class="animal" onclick="sonido('vaca')">
-      <img src="imagenes/vaca.png">
-      <p>VACA</p>
-    </div>
-
-  </div>
-
-  <script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
