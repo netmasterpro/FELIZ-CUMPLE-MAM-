@@ -18,40 +18,35 @@ body {
     padding: 10px;
 }
 
-/* --- TEXTO ORO ULTRA GORDITO Y LLAMATIVO --- */
-.gold-text {
-    font-family: 'Lilita One', cursive; /* Fuente súper rellena, gordita y amigable */
-    text-transform: uppercase;
-    background: linear-gradient(
-        to bottom, 
-        #ffe600 0%,  
-        #fffbcf 20%, 
-        #ffcc00 45%, 
-        #d4a373 75%, 
-        #ffcc00 100
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* --- ESTILO PARA LA IMAGEN DEL TÍTULO EN LA ENTRADA --- */
+.title-image {
+    width: 90%;             /* Se adapta al tamaño del celular */
+    max-width: 360px;       /* Evita que se haga gigante en pantallas grandes */
+    height: auto;           /* Mantiene la proporción perfecta sin deformarse */
+    margin-bottom: 10px;
     
-    /* Contorno oscuro más grueso para letras gorditas */
-    -webkit-text-stroke: 1.5px #382400; 
+    /* Agrega una sombra suave debajo del PNG para darle relieve del fondo */
+    filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.3)); 
     
-    filter: drop-shadow(0px 5px 8px rgba(0, 0, 0, 0.45)) drop-shadow(0px 1px 2px rgba(255, 230, 0, 0.6));
-    font-size: 2.5rem; 
-    text-align: center;
-    line-height: 1.15;
-    margin-bottom: 5px;
-    letter-spacing: 0.5px;
+    /* Efecto sutil de animación al aparecer */
+    animation: gentleFadeIn 1.2s ease-out;
 }
 
+@keyframes gentleFadeIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- TÍTULO DE LA CARTA (DORADO AMARILLO GORDITO) --- */
 .sub-gold {
     font-family: 'Playfair Display', serif;
-    font-weight: 900; /* Peso máximo, muy gruesa */
+    font-weight: 900; 
     font-style: italic;
     background: linear-gradient(to bottom, #fffbcf 0%, #ffcc00 50%, #b38600 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
+    /* Contorno oscuro para que despegue del pergamino */
     -webkit-text-stroke: 1px #2b1a00;
 
     filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.4));
@@ -82,10 +77,10 @@ body {
 
 /* --- REGALO INTERACTIVO MÓVIL --- */
 .gift-box {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     cursor: pointer;
-    margin: 20px 0;
+    margin: 15px 0;
     animation: energeticBounce 1s infinite ease-in-out;
     transition: transform 0.2s;
 }
@@ -268,7 +263,6 @@ body {
 .letter-container::-webkit-scrollbar-thumb { background: #7a5835; border-radius: 10px; }
 
 @media (max-width: 360px) {
-    .gold-text { font-size: 2.1rem; }
     .vintage-paper { padding: 20px 15px; }
     .letter-text { font-size: 1.05rem; }
 }
